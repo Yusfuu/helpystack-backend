@@ -4,6 +4,7 @@ namespace App\Http;
 
 class Response
 {
+
   public static function json($body)
   {
     header('Content-Type: application/json');
@@ -19,8 +20,13 @@ class Response
     ];
   }
 
-  public static function write($body)
+  public function write($body)
   {
     return exit($body);
+  }
+
+  public function withCookie()
+  {
+    # code...
   }
 }

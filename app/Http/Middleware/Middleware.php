@@ -1,6 +1,7 @@
 <?php
 
-namespace App;
+namespace App\Http\Middleware;
+
 
 use Countable;
 
@@ -231,7 +232,7 @@ class Middleware
     }
 
     $nm = $this->hashName() . $this->extension($file->name);
-    $dir = __DIR__ . '/storage/' . $nm;
+    $dir = dirname(__DIR__, 3) . '/public/resources/avatars/' . $nm;
 
     if (move_uploaded_file($file->tmp_name, $dir)) {
       return $this->getInfo(true, $nm);
@@ -247,7 +248,7 @@ class Middleware
    */
   public function removeUploaded($path = null)
   {
-    $dir = __DIR__ . '/storage/' . $path;
+    $dir = dirname(__DIR__, 3) . '/public/resources/avatars/' . $path;
     if (unlink($dir)) {
       return $this->getInfo(true, "Removed.");
     } else {
@@ -284,7 +285,8 @@ class Middleware
    */
   public function validateType($value): bool
   {
-    return in_array($value, ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp']);
+    // ['jpg', 'jpeg', 'png', 'gif', 'svg', 'webp']
+    return in_array($value, ['jpg', 'png']);
   }
 
   public function getInfo($status, $message)

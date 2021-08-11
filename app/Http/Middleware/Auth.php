@@ -21,7 +21,7 @@ class Auth
       "dd" => $body
     ];
 
-    return (object)["type" => "Bearer", "token" => JWT::encode($payload, $_ENV['APP_KEY'])];
+    return JWT::encode($payload, $_ENV['APP_KEY']);
   }
 
 

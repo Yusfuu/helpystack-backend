@@ -39,9 +39,15 @@ class Request
     }
 
     $body = [];
+    // $body[$key] = trim(filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS));
     foreach ($_POST as $key => $value) {
-      $body[$key] = trim(filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS));
+      $body[$key] = trim($value);
     }
     return (object)$body;
+  }
+
+  public function authorization($name = '__token__')
+  {
+    return $_COOKIE[$name] ?? null;
   }
 }

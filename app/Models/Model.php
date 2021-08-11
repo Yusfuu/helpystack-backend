@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\config\Database;
+use App\Http\Response;
 
 class Model
 {
@@ -33,6 +34,7 @@ class Model
     $query = "INSERT INTO $table ($columns) VALUES ($values);";
     $sth = $dbh->prepare($query);
     $sth->execute();
+    return $dbh->lastInsertId();
   }
 
   public static function delete(int $id)
@@ -69,5 +71,34 @@ class Model
     $query = "UPDATE $table SET $values WHERE id = $id;";
     $sth = $dbh->prepare($query);
     $sth->execute();
+  }
+
+  public static function query($stringQuery)
+  {
+    $table = substr(strrchr(get_called_class(), "\\"), 1);
+    $dbh = Database::connect();
+    $sth = $dbh->prepare($stringQuery);
+    $sth->execute();
+  }
+
+  public static function fetchAll($stringQuery)
+  {
+    $dbh = Database::connect();
+    $sth = $dbh->prepare($stringQuery);
+    $sth->execute();
+    return $sth->fetchAll();
+  }
+
+  public static function findBy($colVal, $colFilter = [])
+  {
+    $table = substr(strrchr(get_called_class(), "\\"), 1);
+    $dbh = Database::connect();
+    $cols = empty($colFilter) ? "*" : implode(',', $colFilter);
+    $condition = substr(array_reduce(array_keys($colVal), function ($acc, $cur) {
+      return $acc = $acc . "$cur = ?,";
+    }, ""), 0, -1);
+    $sth = $dbh->prepare("SELECT $cols FROM $table WHERE $condition;");
+    $sth->execute(array_values($colVal));
+    return $sth->fetchAll();
   }
 }

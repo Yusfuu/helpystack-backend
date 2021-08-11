@@ -45,7 +45,6 @@ class Route extends RouteCollector
   public function call()
   {
     $routes = $this->filter_routes_by_method(self::$routes, $this->args->method);
-
     foreach ($routes as $value) {
       if ($this->matches($value["uri"], $this->args->path ?? "/")) {
         $this->currentRoute = (object) $value;
