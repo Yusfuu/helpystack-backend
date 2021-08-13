@@ -2,7 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Http\Middleware\Auth;
 use App\Http\Request;
+use App\Http\Response;
+use App\Models\Comments;
 
 class CommentController extends Controller
 {
@@ -12,9 +15,12 @@ class CommentController extends Controller
    *
    * @return \Http\Request
    */
-  public static function index(Request $request)
+  public static function pagination(Request $request, Response $response)
   {
-    //
+    $page = $request->params->page;
+    $id = $request->params->id;
+    $comments = Comments::pagination($page, $id);
+    $response->json($comments);
   }
 
   /**
@@ -22,9 +28,16 @@ class CommentController extends Controller
    *
    * @param  \Http\Request  $request
    */
-  public static function store(Request $request)
+  public static function store(Request $request, Response $response)
   {
-    //
+    $post_id = $request->form()->post_id;
+    $body = $request->form()->body;
+    $authorization = $request->form()->Authorization;
+    $user = Auth::verify("Bearer $authorization");
+    if (!$user) $response->json(null);
+    $data = (object)['uid' => $user->dd->id, 'post_id' => $post_id, 'body' => $body];
+    Comments::create($data);
+    $response->json($data);
   }
 
   /**

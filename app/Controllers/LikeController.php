@@ -2,7 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Http\Middleware\Auth;
 use App\Http\Request;
+use App\Http\Response;
+use App\Models\Likes;
 
 class LikeController extends Controller
 {
@@ -22,9 +25,15 @@ class LikeController extends Controller
    *
    * @param  \Http\Request  $request
    */
-  public static function store(Request $request)
+  public static function store(Request $request, Response $response)
   {
-    //
+    $post_id = $request->form()->post_id;
+    $authorization = $request->form()->Authorization;
+    $user = Auth::verify("Bearer $authorization");
+    if (!$user) $response->json(null);
+    $data = (object)['uid' => $user->dd->id, 'post_id' => $post_id];
+    Likes::create($data);
+    $response->json($data);
   }
 
   /**
