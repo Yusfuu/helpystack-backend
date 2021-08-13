@@ -9,7 +9,7 @@
         }
     ],
     "scripts": {
-        "post-install-cmd": [
+        "env": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
         ]
     },
