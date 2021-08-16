@@ -15,8 +15,8 @@ composer run env
 
 ## Database Setup
 
-Import tables from the sql file in the SQL folder 
-`SQL/helpystack.sql`
+Import tables from the sql file in the main folder 
+`helpystack.sql`
 
 
 ## PHP built-in server
