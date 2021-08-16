@@ -48,8 +48,8 @@
       </h1>
 
       <div class="hero-cta">
-        <a class="button button-primary" href="#">Sign up</a>
-        <a class="button button-secondary" href="#">Sign in</a>
+        <a class="button button-primary" href="https://helpystack.vercel.app/">Sign up</a>
+        <a class="button button-secondary" href="https://helpystack.vercel.app/">Sign in</a>
       </div>
     </section>
     <h1 class="testimonials-header-text">Proudly used by the <strong>world's best.</strong></h1>

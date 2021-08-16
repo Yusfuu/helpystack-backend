@@ -14,9 +14,9 @@ use function App\lib\view;
 */
 
 Route::get('/', function (Request $request) {
-  return view('welcome', ['lang' => 'PHP']);
+  return view('home', ['year' => date("Y")]);
 });
 
-Route::get('/home', function (Request $request) {
-  return view('home', ['year' => date("Y")]);
+Route::get('/about', function (Request $request) {
+  return view('welcome', ['lang' => 'PHP']);
 });

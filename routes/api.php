@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\CommentController;
+use App\Controllers\FollowController;
 use App\Controllers\LikeController;
 use App\Controllers\PostController;
 use App\Controllers\UserController;
@@ -15,26 +16,56 @@ use App\Routing\Route;
 |
 */
 
-Route::post('/accounts/signin', [UserController::class, 'signin']);
-Route::post('/accounts/signup', [UserController::class, 'signup']);
-Route::post('/u/auth', [UserController::class, 'auth']);
-Route::post('/u/avatar', [UserController::class, 'avatar']);
-Route::post('/u/delete', [UserController::class, 'destroy']);
-Route::post('/u/update', [UserController::class, 'update']);
-Route::post('/u/profile/{uid}', [UserController::class, 'show']);
+//? User
+
+Route::post('/accounts/signin', [UserController::class, 'signin']); //*user signin
+
+Route::post('/accounts/signup', [UserController::class, 'signup']); //*user signup
+
+Route::post('/u/auth', [UserController::class, 'auth']); //*check user auth
+
+Route::post('/u/avatar', [UserController::class, 'avatar']); //*upload user avatar
+
+Route::post('/u/delete', [UserController::class, 'destroy']); //* delete user
+
+Route::post('/u/update', [UserController::class, 'update']); //* update user
+
+Route::post('/u/profile/{uid}', [UserController::class, 'show']); //* show user profile by id
 
 
-Route::post('/p/publish', [PostController::class, 'store']);
-Route::get('/p/page/{page}', [PostController::class, 'pagination']);
-Route::get('/p/{id}', [PostController::class, 'getOnePostByUrl']);
-Route::get('/p/tag/{tag}/{page}', [PostController::class, 'getAllPostByTag']);
-Route::get('/p/top/{page}', [PostController::class, 'getAllPostByTop']);
-Route::post('/p/delete', [PostController::class, 'destroy']);
-Route::post('/me/all/p', [PostController::class, 'getAllPostsByUser']);
+//? Publish
+
+Route::post('/p/publish', [PostController::class, 'store']); //* publish snippet
+
+Route::get('/p/page/{page}', [PostController::class, 'pagination']); //* get pagination snippet
+
+Route::get('/p/{id}', [PostController::class, 'getOnePostByUrl']); //* get One Post By Url
+
+Route::get('/p/tag/{tag}/{page}', [PostController::class, 'getAllPostByTag']); //* get One Post By Tag
+
+Route::get('/p/top/{page}', [PostController::class, 'getAllPostByTop']); //* get All Posts By Top
+
+Route::post('/p/delete', [PostController::class, 'destroy']); //* delete a publish
+
+Route::post('/me/all/p', [PostController::class, 'getAllPostsByUser']); //* get All Posts By User
 
 
-Route::post('/p/like', [LikeController::class, 'store']);
+//? Like
+
+Route::post('/p/like', [LikeController::class, 'store']); //* store like
 
 
-Route::post('/p/comment', [CommentController::class, 'store']);
-Route::get('/p/{id}/comment/{page}', [CommentController::class, 'pagination']);
+//? Comment
+
+Route::post('/p/comment', [CommentController::class, 'store']); //* store comment
+
+Route::get('/p/{id}/comment/{page}', [CommentController::class, 'pagination']); //* get pagination comment
+
+
+//? Follow
+
+Route::post('/follow', [FollowController::class, 'store']); //* store follow
+
+Route::post('/unfollow', [FollowController::class, 'destroy']); //* destroy follow
+
+Route::post('/follow/show', [FollowController::class, 'show']);//* show follow
